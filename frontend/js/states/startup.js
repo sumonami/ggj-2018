@@ -12,7 +12,6 @@ var _common = require('./_common');
 var StartupState = function() {
 };
 
-
 StartupState.prototype.preload = function() {
     _common.setGameScale(this.game);
     var self = this;

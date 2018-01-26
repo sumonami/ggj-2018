@@ -86,7 +86,6 @@ function preloadAssets(game, fileLoadedCallback) {
     });
 
     game.load.start();
-
 }
 
 module.exports = {

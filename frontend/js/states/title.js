@@ -162,6 +162,4 @@ Phaser.Filter.Glow = function (game) {
 Phaser.Filter.Glow.prototype = Object.create(Phaser.Filter.prototype);
 Phaser.Filter.Glow.prototype.constructor = Phaser.Filter.Glow;
 
-
-
 module.exports = TitleState;

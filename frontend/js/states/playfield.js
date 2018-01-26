@@ -5,8 +5,6 @@ var _common = require('./_common');
 var Ship = require('../prefabs/ship');
 var Ships = require('../prefabs/ships');
 
-
-
 var PlayfieldState = function() {
     this.roundEnded = false;
 };
@@ -41,7 +39,6 @@ PlayfieldState.prototype.create = function(game) {
 
     this.createBackground();
     this.createPlayers(state.numPlayers);
-
 };
 
 PlayfieldState.prototype.endRound = function() {
