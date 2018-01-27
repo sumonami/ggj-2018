@@ -1,6 +1,8 @@
 {
-    // Settings
-    "passfail"      : false,  // Stop on first error.
-    "maxerr"        : 100,    // Maximum error before stopping.
+    "globals": {
+        "PIXI": false,
+        "Phaser": false,
+        "Tone": false
+    },
     "node"          : true
 }
