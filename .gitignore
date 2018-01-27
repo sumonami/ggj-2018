@@ -174,3 +174,5 @@ Session.vim
 .netrwhist
 *~
 
+# Extra
+dump
