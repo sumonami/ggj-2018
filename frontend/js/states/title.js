@@ -53,20 +53,9 @@ TitleState.prototype.create = function() {
             .to({ alpha: 1.0  }, 2000, Phaser.Easing.Linear.In)
             .start();
 
-    // function sleep(ms) {
-    //       return new Promise(resolve => setTimeout(resolve, ms));
-    // }
-
-    // for (var i = 0; i < 100; i++) {
-    //     //await sleep(2000);
-    //     //this.text.body.x = i;
-    // }
-
-
-
 };
+
 TitleState.prototype.getPlayerCount = function () {
-    // console.log("FREQ:",CUR_PITCH);
     //this.audioSelect.play();
     this.subtext.setText("How many players (2-8)?");
     this.twoButton = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO);
