@@ -20,10 +20,7 @@ var States = {
 var CUR_PITCH = -1;
 
 function setPitch(pitch) {
-    var before = CUR_PITCH;
     CUR_PITCH = pitch;
-    console.log("NEWPITCH:", before, "->", CUR_PITCH);
-
 };
 
 /**
