@@ -17,6 +17,14 @@ var States = {
     'TitleState': require('./states/title'),
     'EndState': require('./states/end')
 };
+var CUR_PITCH = -1;
+
+function setPitch(pitch) {
+    var before = CUR_PITCH;
+    CUR_PITCH = pitch;
+    console.log("NEWPITCH:", before, "->", CUR_PITCH);
+
+};
 
 /**
  * Main app. Little more than a bootstrap - the
@@ -29,8 +37,12 @@ function Main() {
         CONFIG.gameSize.height,
         Phaser.AUTO
     );
-    //set global mpitch
-    game.mpitch=MicPitch;
+
+    //set global mpitch event loop
+    MicPitch.start(function(error) {
+      console.log("start:", error)
+    });
+    MicPitch.onPitchChange(setPitch);
 
     for(var k in States) {
         game.state.add(k, States[k]);

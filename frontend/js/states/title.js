@@ -16,6 +16,7 @@ TitleState.prototype.preload = function() {
     this.audioStart = this.game.add.audio('sfx-startgame');
 };
 
+
 TitleState.prototype.create = function() {
     var state = this;
 
@@ -61,12 +62,12 @@ TitleState.prototype.create = function() {
     //     //this.text.body.x = i;
     // }
 
+
+
 };
 TitleState.prototype.getPlayerCount = function () {
-
+    // console.log("FREQ:",CUR_PITCH);
     //this.audioSelect.play();
-    this.game.synth.triggerAttackRelease("C4", "8n");
-
     this.subtext.setText("How many players (2-8)?");
     this.twoButton = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO);
     this.twoButton.onDown.add(this.setNumPlayers, this, this, 2);
