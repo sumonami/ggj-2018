@@ -65,6 +65,7 @@ TitleState.prototype.create = function() {
 TitleState.prototype.getPlayerCount = function () {
 
     //this.audioSelect.play();
+    this.game.synth.triggerAttackRelease("C4", "8n");
 
     this.subtext.setText("How many players (2-8)?");
     this.twoButton = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO);
