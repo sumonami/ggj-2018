@@ -33,16 +33,24 @@ MoodfieldState.prototype.create = function(game) {
 
 MoodfieldState.prototype.update = function() {
     var state = this;
-    state.roadway.tilePosition.x--;
+    state.roadTop.tilePosition.x--;
+    state.roadBottom.tilePosition.x--;
+    state.roadBottom.tilePosition.x--;
     state.playerNote.makeHappy();
 };
 
 MoodfieldState.prototype.createBackground = function() {
     var state = this;
     state.game.stage.backgroundColor = "#4B7B00";
-    state.roadway = state.game.add.tileSprite(0, state.game.height - 600,
-                                            state.game.width, state.game.height,
-                                            'roadway2');
+    state.roadTop = state.game.add.tileSprite(0, state.game.height - 391,
+                                              state.game.width, 191,
+                                              'roadTop');
+    state.roadMiddle = state.game.add.tileSprite(0, state.game.height - 213,
+                                                 state.game.width, 132,
+                                                 'roadMiddle');
+    state.roadBottom = state.game.add.tileSprite(0, state.game.height - 81,
+                                                 state.game.width, 81,
+                                                 'roadBottom');
 };
 
 module.exports = MoodfieldState;
