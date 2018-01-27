@@ -28,6 +28,7 @@ var assets = {
         ['dog-bullet', 'images/dog-bullet.png'],
         ['wave', 'images/blue_circle.png'],
         ['roadway', 'images/roadway.png'],
+        ['roadway2', 'images/roadway2.png'],
         ['titleText', 'images/titleText.png'],
         ['titleBackground', 'images/titleBackground.png']
     ],

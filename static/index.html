@@ -55,6 +55,16 @@
             border-top: 1px solid #333;
             border-bottom: 1px solid #333;
             box-shadow: 0 0 80px rgba(52, 182, 244, 0.8);
+
+            /* No smoothing for canvas */
+            image-rendering: optimizeSpeed;
+            image-rendering:-moz-crisp-edges;
+            image-rendering:-o-crisp-edges;
+            image-rendering:-webkit-optimize-contrast;
+            image-rendering:optimize-contrast;
+            image-rendering:crisp-edges;
+            image-rendering:pixelated;
+            -ms-interpolation-mode:nearest-neighbor;
         }
     </style>
 </head>

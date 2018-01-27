@@ -6,13 +6,13 @@
 
 var CONFIG = {
 
-    stateAfterStartup: 'TitleState',
+    stateAfterStartup: 'Moodfield',
 
     // Pixel size of the Phaser canvas.
     // (Canvas itself is scaled to viewport)
     gameSize: {
-        width: 1365,
-        height: 768
+        width: 800,
+        height: 600
     },
 
     assetsPath: "/assets/",
