@@ -3,10 +3,13 @@
 var path = require('path');
 var webpack = require('webpack');
 
-// Phaser webpack config
+// External module webpack config
 var phaserModule = path.join(__dirname, '/node_modules/phaser-ce/');
+var toneModule = path.join(__dirname, '/node_modules/tone/');
+
 var phaser = path.join(phaserModule, 'build/custom/phaser-arcade-physics.js');
 var pixi = path.join(phaserModule, 'build/custom/pixi.js');
+var tone = path.join(toneModule, 'build/Tone.js');
 
 module.exports = {
     entry: {
@@ -38,13 +41,15 @@ module.exports = {
     module: {
         loaders: [
             { test: /pixi\.js/, loader: 'expose?PIXI' },
-            { test: /phaser-arcade-physics\.js$/, loader: 'expose?Phaser' }
+            { test: /phaser-arcade-physics\.js$/, loader: 'expose?Phaser' },
+            { test: /Tone\.js$/, loader: 'expose?Tone' }
         ]
     },
     resolve: {
         alias: {
             'phaser': phaser,
-            'pixi': pixi
+            'pixi': pixi,
+            'tone': tone,
         }
     }
 };

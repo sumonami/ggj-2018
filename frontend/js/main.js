@@ -2,6 +2,7 @@
 
 var PIXI = require('pixi');
 var Phaser = require('phaser');
+var Tone = require('tone');
 
 /**
  * main.js
@@ -27,11 +28,12 @@ function Main() {
         CONFIG.gameSize.height,
         Phaser.AUTO
     );
+    // Tone Synth
+    game.synth = new Tone.Synth().toMaster();
 
     for(var k in States) {
         game.state.add(k, States[k]);
     }
-
 
     game.state.start('Startup');
 }
