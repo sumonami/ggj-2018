@@ -27,8 +27,8 @@ TitleState.prototype.create = function() {
     this.startButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     this.startButton.onDown.add(this.getPlayerCount, this);
 
-    this.audioTitle.play();
-    this.audioBgm.play();
+    //this.audioTitle.play();
+    //this.audioBgm.play();
 
     this.subtext = this.game.add.text(0, 0, "CHALLENGER PRESSES SPACEBAH!!", CONFIG.font.bigStyle);
     this.subtext.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
@@ -64,7 +64,7 @@ TitleState.prototype.create = function() {
 };
 TitleState.prototype.getPlayerCount = function () {
 
-    this.audioSelect.play();
+    //this.audioSelect.play();
 
     this.subtext.setText("How many players (2-8)?");
     this.twoButton = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO);
