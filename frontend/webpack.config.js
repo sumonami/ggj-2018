@@ -5,11 +5,11 @@ var webpack = require('webpack');
 
 // External module webpack config
 var phaserModule = path.join(__dirname, '/node_modules/phaser-ce/');
-var toneModule = path.join(__dirname, '/node_modules/tone/');
+var microphonePitchModule = path.join(__dirname, '/node_modules/microphone-pitch/');
 
 var phaser = path.join(phaserModule, 'build/custom/phaser-arcade-physics.js');
 var pixi = path.join(phaserModule, 'build/custom/pixi.js');
-var tone = path.join(toneModule, 'build/Tone.js');
+var micPitch = path.join(microphonePitchModule, 'microphone-pitch.js');
 
 module.exports = {
     entry: {
@@ -42,14 +42,14 @@ module.exports = {
         loaders: [
             { test: /pixi\.js/, loader: 'expose?PIXI' },
             { test: /phaser-arcade-physics\.js$/, loader: 'expose?Phaser' },
-            { test: /Tone\.js$/, loader: 'expose?Tone' }
+            { test: /microphone-pitch\.js$/, loader: 'expose?MicPitch' }
         ]
     },
     resolve: {
         alias: {
             'phaser': phaser,
             'pixi': pixi,
-            'tone': tone,
+            'micPitch': micPitch,
         }
     }
 };

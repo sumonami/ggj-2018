@@ -2,7 +2,7 @@
 
 var PIXI = require('pixi');
 var Phaser = require('phaser');
-var Tone = require('tone');
+var MicPitch = require('micPitch');
 
 /**
  * main.js
@@ -29,8 +29,8 @@ function Main() {
         CONFIG.gameSize.height,
         Phaser.AUTO
     );
-    // Tone Synth
-    game.synth = new Tone.Synth().toMaster();
+    //set global mpitch
+    game.mpitch=MicPitch;
 
     for(var k in States) {
         game.state.add(k, States[k]);
