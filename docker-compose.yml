@@ -5,7 +5,7 @@ frontend:
         - ./static:/static
         - ./node_modules:/src/node_modules
     working_dir: /src
-    command: make watch
+    command: make build
 server:
     build: server
     volumes:
