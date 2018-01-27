@@ -33,9 +33,8 @@ MoodfieldState.prototype.create = function(game) {
 
 MoodfieldState.prototype.update = function() {
     var state = this;
-    state.roadTop.tilePosition.x--;
-    state.roadBottom.tilePosition.x--;
-    state.roadBottom.tilePosition.x--;
+    state.roadTop.tilePosition.x-= 1;
+    state.roadBottom.tilePosition.x -= 2;
     state.playerNote.makeHappy();
 };
 
