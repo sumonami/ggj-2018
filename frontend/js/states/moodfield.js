@@ -1,7 +1,7 @@
 'use strict';
 
 var _common = require('./_common');
-
+var Note = require('../prefabs/note');
 var MoodfieldState = function() {};
 
 MoodfieldState.prototype.preload = function() {
@@ -20,11 +20,21 @@ MoodfieldState.prototype.create = function(game) {
     state.game.physics.startSystem(Phaser.Physics.ARCADE);
 
     this.createBackground();
+    var playernoteinfo = {
+        initLoc: [200, 230],
+        sprite: 'happy',
+        image: 'happy',
+        tint: '0xffffff'
+    };
+    state.playerNote = new Note(state, playernoteinfo);
+
 };
+
 
 MoodfieldState.prototype.update = function() {
     var state = this;
     state.roadway.tilePosition.x--;
+    state.playerNote.makeHappy();
 };
 
 MoodfieldState.prototype.createBackground = function() {

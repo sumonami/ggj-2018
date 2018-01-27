@@ -30,7 +30,10 @@ var assets = {
         ['roadway', 'images/roadway.png'],
         ['roadway2', 'images/roadway2.png'],
         ['titleText', 'images/titleText.png'],
-        ['titleBackground', 'images/titleBackground.png']
+        ['titleBackground', 'images/titleBackground.png'],
+        ['happy', 'images/happy.png'],
+        ['sad', 'images/sad.png'],
+        ['angry', 'images/angry.png']
     ],
     spritesheets: [
         ['water', 'spritesheets/water.png', 256, 256]
