@@ -6,7 +6,7 @@
 
 var CONFIG = {
 
-    stateAfterStartup: 'TitleState',
+    stateAfterStartup: 'Moodfield',
 
     // Pixel size of the Phaser canvas.
     // (Canvas itself is scaled to viewport)
