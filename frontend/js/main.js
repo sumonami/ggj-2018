@@ -32,11 +32,11 @@ function Main() {
 
     game.myPitch = -1;
     game.updateMyPitch = function(pitch){
-        game.myPitch = pitch
+        game.myPitch = pitch;
     };
     //set global mpitch event loop
     MicPitch.start(function(error) {
-      console.log("start:", error)
+      console.log("start:", error);
     });
     MicPitch.onPitchChange(game.updateMyPitch);
 
