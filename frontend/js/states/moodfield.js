@@ -29,9 +29,10 @@ MoodfieldState.prototype.update = function() {
 
 MoodfieldState.prototype.createBackground = function() {
     var state = this;
-    state.roadway = state.game.add.tileSprite(0, state.game.height - 120,
+    state.game.stage.backgroundColor = "#4B7B00";
+    state.roadway = state.game.add.tileSprite(0, state.game.height - 600,
                                             state.game.width, state.game.height,
-                                            'roadway');
+                                            'roadway2');
 };
 
 module.exports = MoodfieldState;
