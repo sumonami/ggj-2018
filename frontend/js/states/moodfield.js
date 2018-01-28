@@ -41,15 +41,17 @@ MoodfieldState.prototype.create = function(game) {
 
     state.happyText = this.game.add.text(0, 0, state.happyScore, CONFIG.font.bigStyle);
     state.angryText = this.game.add.text(state.game.width - 40, 0, state.angryScore, CONFIG.font.bigStyle);
-    state.noteText = this.game.add.text(70, state.game.height - 160, "Note!", CONFIG.font.bigStyle);
+    // state.noteText = this.game.add.text(70, state.game.height - 160, "Note!", CONFIG.font.bigStyle);
+    state.noteText = this.game.add.text(playernoteinfo.initLoc[0] - 20, state.game.height-230, "Note!", CONFIG.font.bigStyle);
 
     state.notes = new Notes(state);
-    state.game.time.events.repeat(Phaser.Timer.SECOND * 3, 1, this.addTargetNote, this);
-    console.log("WIDTH", state.game.width);
-    console.log("HEIGHT", state.game.height);
+    state.game.notesToAdd = 5;
+    state.game.noteWaitTime = 3;
+    state.game.minNoteWaitTime = 0.5;
+    state.game.noteWaitTimeReduceFactor = 0.5;
+    state.game.time.events.repeat(Phaser.Timer.SECOND * state.game.noteWaitTime, state.game.notesToAdd, this.addTargetNote, this);
+    // state.game.time.events.repeat(Phaser.Timer.SECOND * 3, 10000, this.addTargetNote, this);
     state.playerNote = new Note(state, playernoteinfo);
-    console.log("XPOS", state.playerNote.x);
-    console.log("YPOS", state.playerNote.y);
 
 };
 
@@ -58,14 +60,29 @@ MoodfieldState.prototype.addTargetNote = function() {
     var state = this;
     console.log("creating target...");
     var playernoteinfo = {
-        initLoc: [state.game.width, state.game.height-200],
+        initLoc: [state.game.width+1, state.game.height-150],
         initVel: -200,
         isPlayer: false,
         sprite: 'sad',
         image: 'sad',
         tint: '0x0099ff' // "sad" blue
     };
-    state.notes.add(new Note(state, playernoteinfo));
+    var newnote = new Note(state, playernoteinfo);
+
+    state.notes.add(newnote);
+
+    //state.noteText = this.game.add.text(playernoteinfo.initLoc[0] - 20, playernoteinfo.initLoc[1]-80, "Note!", CONFIG.font.bigStyle);
+
+    state.game.notesToAdd--;
+    if (state.game.notesToAdd < 1) {
+        if (state.game.noteWaitTime <= state.game.minNoteWaitTime){
+            console.log("GAME OVAH!!");
+        } else {
+            state.game.notesToAdd = 5;
+            state.game.noteWaitTime = (state.game.noteWaitTime * state.game.noteWaitTimeReduceFactor);
+            state.game.time.events.repeat(Phaser.Timer.SECOND * state.game.noteWaitTime, state.game.notesToAdd, this.addTargetNote, state);
+        }
+    }
 };
 
 

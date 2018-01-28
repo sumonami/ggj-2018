@@ -11,14 +11,15 @@ var Note = function(state, playerinfo) {
     this.isPlayer = playerinfo.isPlayer;
     this.fulfilled = false;
     if (this.isPlayer) {
-        this.note = "A"
+        this.note = NoteEngine.getNote(state.game.myPitch);
     } else {
         this.note = NoteEngine.getRandomNote();
-        console.log(this.note, "note created");
     }
 
     // instantiate object
     Phaser.Sprite.call(this, state.game, x, y, image);
+    this.noteText = this.game.add.text(playerinfo.initLoc[0] - 20, state.game.height-230, this.note, CONFIG.font.bigStyle);
+
     // constants
     this.x = x;
     this.y = y;
@@ -48,11 +49,12 @@ Note.prototype.constructor = Note;
 
 Note.prototype.update = function() {
     var self = this;
+    self.noteText.position.x = this.x;
+
     if (self.fulfilled) {
-        console.log("fufilled! skipping");
-    // } else if (self.isPlayer){
-    //     console.log("isPlayer! skipping");
+        return
     } else if (this.x < self.state.playerNote.x) {
+
         var playerNote = NoteEngine.getNote(this.game.myPitch);
 
         if (playerNote == self.note) {
@@ -61,6 +63,8 @@ Note.prototype.update = function() {
             self.body.velocity.y = -100;
             console.log("success");
             self.state.incrementHappy();
+            self.noteText.destroy();
+
         }
         else {
             console.log("FAIL!", playerNote, "!=", self.note);
@@ -68,6 +72,7 @@ Note.prototype.update = function() {
             self.body.velocity.x = 100;
             self.body.velocity.y = -100;
             self.state.incrementAngry();
+            self.noteText.destroy();
         }
         self.fulfilled = true;
     }
