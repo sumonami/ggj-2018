@@ -28,7 +28,8 @@ MoodfieldState.prototype.create = function(game) {
     state.gameOver = true;
     state.happyText = this.game.add.text(0, 0, null, CONFIG.font.bigStyle);
     state.angryText = this.game.add.text(state.game.width - 280, 0, null, CONFIG.font.bigStyle);
-
+    this.game.winsprites = state.game.add.group();
+    this.game.losesprites = state.game.add.group();
     //  This will run in Canvas mode, so let's gain a little speed and display
     state.game.renderer.clearBeforeRender = false;
     state.game.renderer.roundPixels = false;
@@ -43,6 +44,7 @@ MoodfieldState.prototype.create = function(game) {
 
     // Play Theme
     this.musTheme.play();
+
 };
 
 
@@ -165,6 +167,14 @@ MoodfieldState.prototype.startGame = function() {
     state.scoreHappy();
     state.scoreAngry();
 
+    //big dirty hack to make sure all the result sprites are gone.
+    state.game.winsprites.callAll('destroy');
+    state.game.losesprites.callAll('destroy');
+    state.game.winsprites.callAll('destroy');
+    state.game.losesprites.callAll('destroy');
+    state.game.winsprites.callAll('destroy');
+    state.game.losesprites.callAll('destroy');
+
     // Create player Note
     var playerNoteInfo = {
         initLoc: [50, state.game.height-150],
@@ -174,7 +184,7 @@ MoodfieldState.prototype.startGame = function() {
         image: 'happy',
         tint: '0xffffff' // white
     };
-    state.noteText = this.game.add.text(playerNoteInfo.initLoc[0] - 20, state.game.height-230, "Note!", CONFIG.font.bigStyle);
+    state.noteText = state.game.add.text(playerNoteInfo.initLoc[0] - 20, state.game.height-230, "Note!", CONFIG.font.bigStyle);
     state.playerNote = new Note(state, playerNoteInfo);
 
     // NPC Notes
@@ -183,15 +193,62 @@ MoodfieldState.prototype.startGame = function() {
     state.game.noteWaitTime = 3;
     state.game.minNoteWaitTime = 0.5;
     state.game.noteWaitTimeReduceFactor = 0.9;
-    state.game.time.events.repeat(Phaser.Timer.SECOND * state.game.noteWaitTime, state.game.notesToAdd, this.addTargetNote, this);
+    state.game.time.events.repeat(Phaser.Timer.SECOND * state.game.noteWaitTime, state.game.notesToAdd, state.addTargetNote, state);
+};
+
+
+MoodfieldState.prototype.addWinNote = function() {
+    var state = this;
+    console.log("creating success to this.winnersdrawn: " + this.winnersdrawn);
+    console.log("creating success to this.winspacing: " + this.winspacing);
+
+    var xpos = (50 + (this.winnersdrawn * (this.winspacing + 40)))
+    console.log("creating success to xpos: " + xpos);
+
+    //var newnote = new Note(state, playernoteinfo);
+    var newnote = state.game.add.sprite( xpos, state.game.height - 500, "happy");
+
+    newnote.tint = '0x66ff33';
+    state.game.winsprites.add(newnote);  //add to group for later cleanup
+    //Phaser.Physics.ARCADE.moveToXY(newnote, xpos, wininfo.initLoc[1], 100);
+    this.winnersdrawn++;
+};
+
+
+MoodfieldState.prototype.addLoseNote = function() {
+    var state = this;
+    console.log("creating success to this.losersdrawn: " + this.losersdrawn);
+    console.log("creating success to this.losespacing: " + this.losespacing);
+
+    var xpos = (50 + (this.losersdrawn * (this.losespacing + 40)))
+    console.log("creating success to xpos: " + xpos);
+
+    //var newnote = new Note(state, playernoteinfo);
+    var newnote = state.game.add.sprite( xpos, state.game.height - 350, "angry");
+
+    newnote.tint = '0xff3300';
+    state.game.losesprites.add(newnote);  //add to group for later cleanup
+    //Phaser.Physics.ARCADE.moveToXY(newnote, xpos, wininfo.initLoc[1], 100);
+    this.losersdrawn++;
 };
 
 
 MoodfieldState.prototype.endGame = function(endCondition) {
     var state = this;
+
     state.gameOver = true;
     state.endCondition = endCondition;
+
     console.log("Game over called");
+
+    this.winspacing = 5;
+    this.losespacing = 5;
+    this.winnersdrawn = 0;
+    this.losersdrawn = 0;
+
+    state.game.time.events.repeat(Phaser.Timer.SECOND * 0.01, state.happyScore, this.addWinNote, this);
+    state.game.time.events.repeat(Phaser.Timer.SECOND * 0.01, state.angryScore, this.addLoseNote, this);
+
 };
 
 module.exports = MoodfieldState;
