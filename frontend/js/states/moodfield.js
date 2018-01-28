@@ -140,6 +140,34 @@ MoodfieldState.prototype.scoreAngry = function(num) {
     }
 };
 
+MoodfieldState.prototype.addWinNote = function() {
+    var state = this;
+    console.log("creating success to this.winnersdrawn: " + this.winnersdrawn);
+    console.log("creating success to this.winspacing: " + this.winspacing);
+
+    var xpos = (50 + (this.winnersdrawn * (this.winspacing + 80)))
+    console.log("creating success to xpos: " + xpos);
+
+
+    var playernoteinfo = {
+        initLoc: [xpos, state.game.height - 400],
+        initVel: 0,
+        isPlayer: false,
+        sprite: 'sad',
+        image: 'sad',
+        tint: '0x0099ff' // "sad" blue
+    };
+
+
+    var newnote = new Note(state, playernoteinfo);
+    newnote.body.velocity.x = 0;
+    newnote.body.velocity.y = 0;
+
+    //Phaser.Physics.ARCADE.moveToXY(newnote, xpos, wininfo.initLoc[1], 100);
+    this.winnersdrawn++;
+
+};
+
 
 MoodfieldState.prototype.startGame = function() {
     var state = this;
@@ -180,9 +208,20 @@ MoodfieldState.prototype.startGame = function() {
 
 MoodfieldState.prototype.endGame = function(endCondition) {
     var state = this;
+
     state.gameOver = true;
     state.endCondition = endCondition;
+
     console.log("Game over called");
+
+    this.winspacing = 5;
+    this.losespacing = 5;
+    this.winnersdrawn = 0;
+    this.losersdrawn = 0;
+
+    state.game.time.events.repeat(Phaser.Timer.SECOND * 0.5, state.happyScore, this.addWinNote, this);
+    //state.game.time.events.repeat(Phaser.Timer.SECOND * 0.5, state.angryScore, this.addLoseNote(), this);
+
 };
 
 module.exports = MoodfieldState;

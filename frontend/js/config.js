@@ -56,7 +56,7 @@ var CONFIG = {
     // Game settings
     settings: {
         happyMax: 1000,
-        angryMax: 3
+        angryMax: 2
     }
 
 };
