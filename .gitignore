@@ -3,6 +3,8 @@
 *.bundle.js
 *.bundle.js.map
 *.wav
+*.orig
+dump
 
 
 # Created by https://www.gitignore.io/api/node,python,linux,osx,sublimetext,vim
@@ -173,6 +175,3 @@ sftp-config.json
 Session.vim
 .netrwhist
 *~
-
-# Extra
-dump
