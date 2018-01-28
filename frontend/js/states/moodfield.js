@@ -202,6 +202,8 @@ MoodfieldState.prototype.startGame = function() {
 MoodfieldState.prototype.endGame = function(endCondition) {
     var state = this;
     state.gameOver = true;
+    state.musTheme.stop();
+    state.bgmTheme.stop();
     state.endCondition = endCondition;
     console.log("Game over called");
 };
