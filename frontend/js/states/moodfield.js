@@ -92,7 +92,7 @@ MoodfieldState.prototype.update = function() {
     // Deal with player noise making
     var curNote = NoteEngine.getNote(state.game.myPitch);
     if (curNote) {
-        state.noteText.setText(curNote);
+        state.noteText.setText(state.game.myPitch);
     } else {
         state.noteText.setText("");
     }
