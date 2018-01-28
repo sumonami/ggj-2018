@@ -16,84 +16,24 @@ MoodfieldState.prototype.preload = function() {
 
 
 MoodfieldState.prototype.create = function(game) {
-    console.log("MOODFIELD create");
     var state = this;
 
     // Init
-    state.gameOver = false;
-    state.happyScore = 0;
-    state.angryScore = 0;
+    state.gameOver = true;
 
     //  This will run in Canvas mode, so let's gain a little speed and display
     state.game.renderer.clearBeforeRender = false;
     state.game.renderer.roundPixels = false;
 
-    //  We need arcade physics
-    state.game.physics.startSystem(Phaser.Physics.ARCADE);
+    state.game.physics.startSystem(Phaser.Physics.ARCADE);  // We need arcade physics
 
+    // Background graphics
     this.createBackground();
-    var playernoteinfo = {
-        initLoc: [50, state.game.height-150],
-        initVel: 0,
-        isPlayer: true,
-        sprite: 'happy',
-        image: 'happy',
-        tint: '0xffffff' // white
-    };
 
-    state.happyTextLabel = this.game.add.text(0, 0, "Happy Tones:", CONFIG.font.bigStyle);
-    state.happyText = this.game.add.text(230, 0, state.happyScore, CONFIG.font.bigStyle);
-
-    state.angryTextLabel = this.game.add.text(state.game.width - 280, 0, "Angry Tones:", CONFIG.font.bigStyle);
-    state.angryText = this.game.add.text(state.game.width - 40, 0, state.angryScore, CONFIG.font.bigStyle);
-
-    state.noteText = this.game.add.text(playernoteinfo.initLoc[0] - 20, state.game.height-230, "Note!", CONFIG.font.bigStyle);
-
-    state.notes = new Notes(state);
-    state.game.notesToAdd = 5;
-    state.game.noteWaitTime = 3;
-    state.game.minNoteWaitTime = 0.5;
-    state.game.noteWaitTimeReduceFactor = 0.9;
-    state.game.time.events.repeat(Phaser.Timer.SECOND * state.game.noteWaitTime, state.game.notesToAdd, this.addTargetNote, this);
-    state.playerNote = new Note(state, playernoteinfo);
-
-};
-
-
-MoodfieldState.prototype.addTargetNote = function() {
-    var state = this;
-
-    if (state.gameOver) {
-        return;
-    }
-
-    console.log("creating target...");
-    var playernoteinfo = {
-        initLoc: [state.game.width+1, state.game.height-150],
-        initVel: -200,
-        isPlayer: false,
-        sprite: 'sad',
-        image: 'sad',
-        tint: '0x0099ff' // "sad" blue
-    };
-    var newnote = new Note(state, playernoteinfo);
-
-    state.notes.add(newnote);
-
-    state.game.notesToAdd--;
-    if (state.game.notesToAdd < 1) {
-        if (state.game.noteWaitTime <= state.game.minNoteWaitTime){
-            console.log("max speed reached!");
-            state.game.notesToAdd = 50000;
-            state.game.noteWaitTime = state.game.minNoteWaitTime;
-            state.game.time.events.repeat(Phaser.Timer.SECOND * state.game.noteWaitTime, state.game.notesToAdd, this.addTargetNote, state);
-
-        } else {
-            state.game.notesToAdd = 1;
-            state.game.noteWaitTime = (state.game.noteWaitTime * state.game.noteWaitTimeReduceFactor);
-            state.game.time.events.repeat(Phaser.Timer.SECOND * state.game.noteWaitTime, state.game.notesToAdd, this.addTargetNote, state);
-        }
-    }
+    // Start game for now
+    this.startButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    this.startButton.onDown.add(state.startGame, this);
+    this.titleText = this.game.add.text(0, 0, "Press SPACE to start!", CONFIG.font.bigStyle);
 };
 
 
@@ -133,6 +73,42 @@ MoodfieldState.prototype.createBackground = function() {
 };
 
 
+MoodfieldState.prototype.addTargetNote = function() {
+    var state = this;
+
+    if (state.gameOver) {
+        return;
+    }
+
+    console.log("creating target...");
+    var npcNoteInfo = {
+        initLoc: [state.game.width+1, state.game.height-150],
+        initVel: -200,
+        isPlayer: false,
+        sprite: 'sad',
+        image: 'sad',
+        tint: '0x0099ff' // "sad" blue
+    };
+    var newnote = new Note(state, npcNoteInfo);
+
+    state.notes.add(newnote);
+
+    state.game.notesToAdd--;
+    if (state.game.notesToAdd < 1) {
+        if (state.game.noteWaitTime <= state.game.minNoteWaitTime){
+            console.log("max speed reached!");
+            state.game.notesToAdd = 50000;
+            state.game.noteWaitTime = state.game.minNoteWaitTime;
+            state.game.time.events.repeat(Phaser.Timer.SECOND * state.game.noteWaitTime, state.game.notesToAdd, this.addTargetNote, state);
+        } else {
+            state.game.notesToAdd = 1;
+            state.game.noteWaitTime = (state.game.noteWaitTime * state.game.noteWaitTimeReduceFactor);
+            state.game.time.events.repeat(Phaser.Timer.SECOND * state.game.noteWaitTime, state.game.notesToAdd, this.addTargetNote, state);
+        }
+    }
+};
+
+
 MoodfieldState.prototype.incrementHappy = function() {
     var self = this;
     self.happyScore++;
@@ -153,11 +129,54 @@ MoodfieldState.prototype.incrementAngry = function() {
 };
 
 
+MoodfieldState.prototype.startGame = function() {
+    var state = this;
+
+    if (!state.gameOver) {
+        return;  // We've already started!
+    }
+
+    // Cleanup title screen
+    state.titleText.destroy();
+
+    // Reset state where applicable
+    state.gameOver = false;
+    state.happyScore = 0;
+    state.angryScore = 0;
+
+    // Scoreboard
+    state.happyTextLabel = this.game.add.text(0, 0, "Happy Tones:", CONFIG.font.bigStyle);
+    state.happyText = this.game.add.text(230, 0, state.happyScore, CONFIG.font.bigStyle);
+    state.angryTextLabel = this.game.add.text(state.game.width - 280, 0, "Angry Tones:", CONFIG.font.bigStyle);
+    state.angryText = this.game.add.text(state.game.width - 40, 0, state.angryScore, CONFIG.font.bigStyle);
+
+    // Create player Note
+    var playerNoteInfo = {
+        initLoc: [50, state.game.height-150],
+        initVel: 0,
+        isPlayer: true,
+        sprite: 'happy',
+        image: 'happy',
+        tint: '0xffffff' // white
+    };
+    state.noteText = this.game.add.text(playerNoteInfo.initLoc[0] - 20, state.game.height-230, "Note!", CONFIG.font.bigStyle);
+    state.playerNote = new Note(state, playerNoteInfo);
+
+    // NPC Notes
+    state.notes = new Notes(state);
+    state.game.notesToAdd = 5;
+    state.game.noteWaitTime = 3;
+    state.game.minNoteWaitTime = 0.5;
+    state.game.noteWaitTimeReduceFactor = 0.9;
+    state.game.time.events.repeat(Phaser.Timer.SECOND * state.game.noteWaitTime, state.game.notesToAdd, this.addTargetNote, this);
+};
+
+
 MoodfieldState.prototype.endGame = function(endCondition) {
     var state = this;
     state.gameOver = true;
     state.endCondition = endCondition;
     console.log("Game over called");
-}
+};
 
 module.exports = MoodfieldState;
