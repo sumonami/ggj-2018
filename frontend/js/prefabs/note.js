@@ -8,8 +8,14 @@ var Note = function(state, playerinfo) {
     var y = playerinfo.initLoc[1];
     var image = playerinfo.image;
     this.state = state;
+    this.isPlayer = playerinfo.isPlayer;
     this.fulfilled = false;
-    this.note = "A";
+    if (this.isPlayer) {
+        this.note = "A"
+    } else {
+        this.note = NoteEngine.getRandomNote();
+    }
+
     // instantiate object
     Phaser.Sprite.call(this, state.game, x, y, image);
     // constants
@@ -45,15 +51,12 @@ Note.prototype.constructor = Note;
 
 Note.prototype.update = function() {
     var self = this;
-    console.log("update entered, self.x", self.x, "player.x", this.state.playerNote.x);
     if (self.fulfilled) {
         console.log("fufilled! skipping");
     } else if (self.isPlayer){
         console.log("isPlayer! skipping");
     } else if (this.x < self.state.playerNote.x) {
         var playerNote = NoteEngine.getNote(this.game.myPitch);
-        console.log("player note is", playerNote);
-        console.log("note note is", self.note);
 
         if (playerNote == self.note) {
             self.makeHappy();
@@ -63,18 +66,15 @@ Note.prototype.update = function() {
             self.state.incrementHappy();
         }
         else {
+            console.log("FAIL!", playerNote, "!=", NoteEngine.getNote(this.game.myPitch));
             self.makeAngry();
             self.body.velocity.x = 100;
             self.body.velocity.y = -100;
-
-            console.log("fail");
             self.state.incrementAngry();
         }
         self.fulfilled = true;
-    } else {
-        console.log("fuck all happened");
     }
-    console.log("update being left, self.x", self.x, "player.x", this.state.playerNote.x);
+    // console.log("update being left, self.x", self.x, "player.x", this.state.playerNote.x);
 };
 
 Note.prototype.render = function (){
