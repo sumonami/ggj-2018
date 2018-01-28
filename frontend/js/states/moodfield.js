@@ -19,6 +19,12 @@ MoodfieldState.prototype.create = function(game) {
     var state = this;
 
     // Init
+    this.createBackground();
+    state.musTheme = this.add.audio('bgm-title');
+    state.imgTitle = this.add.sprite(0, 0, 'titleText');
+    state.imgTitle.anchor.set(0.5);
+    state.imgTitle.x = this.game.width / 2;
+    state.imgTitle.y = this.game.height / 2;
     state.gameOver = true;
     state.happyText = this.game.add.text(0, 0, null, CONFIG.font.bigStyle);
     state.angryText = this.game.add.text(state.game.width - 280, 0, null, CONFIG.font.bigStyle);
@@ -29,13 +35,14 @@ MoodfieldState.prototype.create = function(game) {
 
     state.game.physics.startSystem(Phaser.Physics.ARCADE);  // We need arcade physics
 
-    // Background graphics
-    this.createBackground();
 
     // Start game for now
     this.startButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     this.startButton.onDown.add(state.startGame, this);
     this.titleText = this.game.add.text(0, 0, "Press SPACE to start!", CONFIG.font.bigStyle);
+
+    // Play Theme
+    this.musTheme.play();
 };
 
 
@@ -150,6 +157,8 @@ MoodfieldState.prototype.startGame = function() {
 
     // Cleanup title screen
     state.titleText.destroy();
+    state.imgTitle.visible = false;
+    state.musTheme.stop();
 
     // Reset state where applicable
     state.gameOver = false;
