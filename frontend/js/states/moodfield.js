@@ -145,7 +145,11 @@ MoodfieldState.prototype.scoreAngry = function(num) {
     }
     self.angryText.setText("Angry Tones: " + self.angryScore);
     if (self.angryScore > CONFIG.settings.angryMax) {
-        self.endGame("lose");
+        if (self.happyScore > self.angryScore){
+            self.endGame("win");
+        } else {
+            self.endGame("lose");
+        }
     }
 };
 
