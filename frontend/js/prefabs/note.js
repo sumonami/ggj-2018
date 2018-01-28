@@ -19,6 +19,9 @@ var Note = function(state, playerinfo) {
     // instantiate object
     Phaser.Sprite.call(this, state.game, x, y, image);
     this.noteText = this.game.add.text(playerinfo.initLoc[0] - 20, state.game.height-230, this.note, CONFIG.font.bigStyle);
+    if (!this.isPlayer) {
+        this.noteText.visibility = false;
+    }
 
     // constants
     this.x = x;
