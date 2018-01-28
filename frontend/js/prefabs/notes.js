@@ -1,9 +1,9 @@
-
 'use strict';
+
 var NoteEngine = require('../note');
 
 var Notes = function (state) {
-    this.state = state
+    this.state = state;
     Phaser.Group.call(this, state.game);
 };
 

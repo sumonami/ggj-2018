@@ -99,7 +99,6 @@ MoodfieldState.prototype.update = function() {
 
     state.roadTop.tilePosition.x-= 1;
     state.roadBottom.tilePosition.x -= 2;
-    state.playerNote.makeHappy();
     state.notes.update();
 };
 

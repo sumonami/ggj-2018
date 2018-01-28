@@ -51,29 +51,20 @@ Note.prototype.update = function() {
     var self = this;
     self.noteText.position.x = this.x;
 
-    if (self.fulfilled) {
-        return
-    } else if (this.x < self.state.playerNote.x) {
+    if ((!self.fulfilled) && (this.x < self.state.playerNote.x)) {
 
         var playerNote = NoteEngine.getNote(this.game.myPitch);
 
         if (playerNote == self.note) {
             self.makeHappy();
-            self.body.velocity.x = 0;
-            self.body.velocity.y = -100;
-            console.log("success");
             self.state.incrementHappy();
-            self.noteText.destroy();
-
         }
         else {
-            console.log("FAIL!", playerNote, "!=", self.note);
             self.makeAngry();
-            self.body.velocity.x = 100;
-            self.body.velocity.y = -100;
             self.state.incrementAngry();
-            self.noteText.destroy();
         }
+
+        self.noteText.destroy();
         self.fulfilled = true;
     }
 };
@@ -84,16 +75,22 @@ Note.prototype.render = function (){
 Note.prototype.makeAngry = function () {
     this.tint = '0xff3300';
     this.loadTexture("angry");
+    this.body.velocity.x = 100;
+    this.body.velocity.y = -100;
 };
 
 Note.prototype.makeSad = function () {
     this.tint = '0x0099ff';
     this.loadTexture("sad");
+    this.body.velocity.x = 0;
+    this.body.velocity.y = 100;
 };
 
 Note.prototype.makeHappy = function () {
     this.tint = '0x66ff33';
     this.loadTexture("happy");
+    this.body.velocity.x = 0;
+    this.body.velocity.y = -100;
 };
 
 Note.prototype.scaleSprite = function (sprite, increment){

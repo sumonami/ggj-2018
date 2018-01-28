@@ -14,6 +14,5 @@ function getNote(frequency) {
 
 module.exports = {
     getNote: getNote,
-    getRandomNote: getRandomNote,
-    noteStrings: noteStrings
+    getRandomNote: getRandomNote
 };

@@ -2,7 +2,9 @@
  * title.js
  * State for the game title screen.
 **/
+
 'use strict';
+
 var CONFIG = require('../config');
 var _common = require('./_common');
 

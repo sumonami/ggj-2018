@@ -2,7 +2,9 @@
  * end.js
  * State for the game end screen.
 **/
+
 'use strict';
+
 var CONFIG = require('../config');
 var _common = require('./_common');
 
