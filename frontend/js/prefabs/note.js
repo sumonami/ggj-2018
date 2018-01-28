@@ -11,7 +11,7 @@ var Note = function(state, playerinfo) {
     this.isPlayer = playerinfo.isPlayer;
     this.fulfilled = false;
     if (this.isPlayer) {
-        this.note = NoteEngine.getNote(state.game.myPitch);
+        // DO NOTHING
     } else {
         this.note = NoteEngine.getRandomNote();
     }
