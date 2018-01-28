@@ -19,10 +19,11 @@ var Note = function(state, playerinfo) {
     //physics
     state.game.physics.enable(this, Phaser.Physics.ARCADE);
     this.enableBody = true;
-    this.body.drag.set(100);
-    this.body.maxVelocity.set(800);
-    this.repel_max_range=300;
-    this.repel_initial_vel=350;
+
+    this.body.velocity.x = playerinfo.initVel;
+    // this.body.maxVelocity.set(800);
+    // this.repel_max_range=300;
+    // this.repel_initial_vel=350;
 
     // add to canvas and log
     state.game.add.existing(this);

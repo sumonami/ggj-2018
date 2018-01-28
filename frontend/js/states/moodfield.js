@@ -2,7 +2,10 @@
 
 var _common = require('./_common');
 var Note = require('../prefabs/note');
+var Notes = require('../prefabs/notes');
 var MoodfieldState = function() {};
+
+var timer, timerEvent;
 
 MoodfieldState.prototype.preload = function() {
     _common.setGameScale(this.game);
@@ -21,12 +24,35 @@ MoodfieldState.prototype.create = function(game) {
 
     this.createBackground();
     var playernoteinfo = {
-        initLoc: [200, 230],
+        initLoc: [50, state.game.height-150],
+        initVel: 0,
         sprite: 'happy',
         image: 'happy',
-        tint: '0xffffff'
+        tint: '0xffffff' // white
     };
+
+    state.notes = new Notes(state);
+    state.game.time.events.repeat(Phaser.Timer.SECOND * 3, 1, this.addTargetNote, this);
+    console.log("WIDTH", state.game.width)
+    console.log("HEIGHT", state.game.height)
     state.playerNote = new Note(state, playernoteinfo);
+    console.log("XPOS", state.playerNote.x)
+    console.log("YPOS", state.playerNote.y)
+
+};
+
+
+MoodfieldState.prototype.addTargetNote = function() {
+    var state = this;
+    console.log("creating target...");
+    var playernoteinfo = {
+        initLoc: [state.game.width, state.game.height-200],
+        initVel: -200,
+        sprite: 'sad',
+        image: 'sad',
+        tint: '0x0099ff' // "sad" blue
+    };
+    state.notes.add(new Note(state, playernoteinfo));
 
 };
 
@@ -36,6 +62,7 @@ MoodfieldState.prototype.update = function() {
     state.roadTop.tilePosition.x-= 1;
     state.roadBottom.tilePosition.x -= 2;
     state.playerNote.makeHappy();
+    state.notes.update()
 };
 
 MoodfieldState.prototype.createBackground = function() {
