@@ -174,6 +174,9 @@ MoodfieldState.prototype.startGame = function() {
     state.game.losesprites.callAll('destroy');
     state.game.winsprites.callAll('destroy');
     state.game.losesprites.callAll('destroy');
+    if (state.resultText) {
+        state.resultText.destroy();
+    }
 
     // Create player Note
     var playerNoteInfo = {
@@ -248,6 +251,13 @@ MoodfieldState.prototype.endGame = function(endCondition) {
 
     state.game.time.events.repeat(Phaser.Timer.SECOND * 0.01, state.happyScore, this.addWinNote, this);
     state.game.time.events.repeat(Phaser.Timer.SECOND * 0.01, state.angryScore, this.addLoseNote, this);
+
+    if (endCondition == "win") {
+        this.resultText = this.game.add.text(0, state.game.height - 100, "You Win! Go Team Happiness!\n(SPACE to restart).", CONFIG.font.bigStyle);
+    } else{
+        this.resultText = this.game.add.text(0, state.game.height - 100, "You Lose! Try to match the notes!\n(SPACE to restart).", CONFIG.font.bigStyle);
+    }
+
 
 };
 
