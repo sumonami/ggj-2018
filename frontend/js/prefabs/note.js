@@ -58,11 +58,11 @@ Note.prototype.update = function() {
 
         if (playerNote == self.note) {
             self.makeHappy();
-            self.state.incrementHappy();
+            self.state.scoreHappy(1);
         }
         else {
             self.makeAngry();
-            self.state.incrementAngry();
+            self.state.scoreAngry(1);
         }
 
         self.noteText.destroy();

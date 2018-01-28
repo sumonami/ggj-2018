@@ -20,6 +20,8 @@ MoodfieldState.prototype.create = function(game) {
 
     // Init
     state.gameOver = true;
+    state.happyText = this.game.add.text(0, 0, null, CONFIG.font.bigStyle);
+    state.angryText = this.game.add.text(state.game.width - 280, 0, null, CONFIG.font.bigStyle);
 
     //  This will run in Canvas mode, so let's gain a little speed and display
     state.game.renderer.clearBeforeRender = false;
@@ -109,20 +111,30 @@ MoodfieldState.prototype.addTargetNote = function() {
 };
 
 
-MoodfieldState.prototype.incrementHappy = function() {
+MoodfieldState.prototype.scoreHappy = function(num) {
     var self = this;
-    self.happyScore++;
-    self.happyText.setText(self.happyScore);
+
+    if (!num) {
+        self.happyScore = 0;
+    } else {
+        self.happyScore += num;
+    }
+    self.happyText.setText("Happy Tones: " + self.happyScore);
     if (self.happyScore > CONFIG.settings.happyMax) {
         self.endGame("win");
     }
 };
 
 
-MoodfieldState.prototype.incrementAngry = function() {
+MoodfieldState.prototype.scoreAngry = function(num) {
     var self = this;
-    self.angryScore++;
-    self.angryText.setText(self.angryScore);
+
+    if (!num) {
+        self.angryScore = 0;
+    } else {
+        self.angryScore += num;
+    }
+    self.angryText.setText("Angry Tones: " + self.angryScore);
     if (self.angryScore > CONFIG.settings.angryMax) {
         self.endGame("lose");
     }
@@ -141,14 +153,8 @@ MoodfieldState.prototype.startGame = function() {
 
     // Reset state where applicable
     state.gameOver = false;
-    state.happyScore = 0;
-    state.angryScore = 0;
-
-    // Scoreboard
-    state.happyTextLabel = this.game.add.text(0, 0, "Happy Tones:", CONFIG.font.bigStyle);
-    state.happyText = this.game.add.text(230, 0, state.happyScore, CONFIG.font.bigStyle);
-    state.angryTextLabel = this.game.add.text(state.game.width - 280, 0, "Angry Tones:", CONFIG.font.bigStyle);
-    state.angryText = this.game.add.text(state.game.width - 40, 0, state.angryScore, CONFIG.font.bigStyle);
+    state.scoreHappy();
+    state.scoreAngry();
 
     // Create player Note
     var playerNoteInfo = {
