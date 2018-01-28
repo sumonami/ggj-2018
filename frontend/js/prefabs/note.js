@@ -14,6 +14,7 @@ var Note = function(state, playerinfo) {
         this.note = "A"
     } else {
         this.note = NoteEngine.getRandomNote();
+        console.log(this.note, "note created");
     }
 
     // instantiate object
@@ -53,8 +54,8 @@ Note.prototype.update = function() {
     var self = this;
     if (self.fulfilled) {
         console.log("fufilled! skipping");
-    } else if (self.isPlayer){
-        console.log("isPlayer! skipping");
+    // } else if (self.isPlayer){
+    //     console.log("isPlayer! skipping");
     } else if (this.x < self.state.playerNote.x) {
         var playerNote = NoteEngine.getNote(this.game.myPitch);
 
@@ -66,7 +67,7 @@ Note.prototype.update = function() {
             self.state.incrementHappy();
         }
         else {
-            console.log("FAIL!", playerNote, "!=", NoteEngine.getNote(this.game.myPitch));
+            console.log("FAIL!", playerNote, "!=", self.note);
             self.makeAngry();
             self.body.velocity.x = 100;
             self.body.velocity.y = -100;
