@@ -68,6 +68,15 @@ Note.prototype.update = function() {
         self.noteText.destroy();
         self.fulfilled = true;
     }
+    if ((self.isPlayer) && self.state.gameOver){
+        if (self.state.endCondition == "win"){
+            this.makeHappy();
+        } else {
+            this.makeSad();
+            this.body.velocity.x = 50;
+            this.body.velocity.y = -100;
+        }
+    }
 };
 
 Note.prototype.render = function (){

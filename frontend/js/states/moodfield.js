@@ -130,7 +130,7 @@ MoodfieldState.prototype.incrementHappy = function() {
     self.happyScore++;
     self.happyText.setText(self.happyScore);
     if (self.happyScore > CONFIG.settings.happyMax) {
-        self.endGame();
+        self.endGame("win");
     }
 };
 
@@ -140,14 +140,15 @@ MoodfieldState.prototype.incrementAngry = function() {
     self.angryScore++;
     self.angryText.setText(self.angryScore);
     if (self.angryScore > CONFIG.settings.angryMax) {
-        self.endGame();
+        self.endGame("lose");
     }
 };
 
 
-MoodfieldState.prototype.endGame = function() {
+MoodfieldState.prototype.endGame = function(endCondition) {
     var state = this;
     state.gameOver = true;
+    state.endCondition = endCondition;
     console.log("Game over called");
 }
 
