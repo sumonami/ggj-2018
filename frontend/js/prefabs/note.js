@@ -1,6 +1,7 @@
 'use strict';
 
 var CONFIG = require('../config');
+var NoteEngine = require('../note');
 
 var Note = function(state, playerinfo) {
     var x = playerinfo.initLoc[0];
@@ -43,6 +44,37 @@ Note.prototype = Object.create(Phaser.Sprite.prototype);
 Note.prototype.constructor = Note;
 
 Note.prototype.update = function() {
+    var self = this;
+    console.log("update entered, self.x", self.x, "player.x", this.state.playerNote.x);
+    if (self.fulfilled) {
+        console.log("fufilled! skipping");
+    } else if (self.isPlayer){
+        console.log("isPlayer! skipping");
+    } else if (this.x < self.state.playerNote.x) {
+        var playerNote = NoteEngine.getNote(this.game.myPitch);
+        console.log("player note is", playerNote);
+        console.log("note note is", self.note);
+
+        if (playerNote == self.note) {
+            self.makeHappy();
+            self.body.velocity.x = 0;
+            self.body.velocity.y = -100;
+            console.log("success");
+            self.state.incrementHappy();
+        }
+        else {
+            self.makeAngry();
+            self.body.velocity.x = 100;
+            self.body.velocity.y = -100;
+
+            console.log("fail");
+            self.state.incrementAngry();
+        }
+        self.fulfilled = true;
+    } else {
+        console.log("fuck all happened");
+    }
+    console.log("update being left, self.x", self.x, "player.x", this.state.playerNote.x);
 };
 
 Note.prototype.render = function (){
