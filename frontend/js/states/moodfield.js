@@ -40,7 +40,7 @@ MoodfieldState.prototype.create = function(game) {
 
     state.happyText = this.game.add.text(0, 0, state.happyScore, CONFIG.font.bigStyle);
     state.angryText = this.game.add.text(state.game.width - 40, 0, state.angryScore, CONFIG.font.bigStyle);
-    state.noteText = this.game.add.text(50, state.game.height - 160, "Note!", CONFIG.font.bigStyle);
+    state.noteText = this.game.add.text(70, state.game.height - 160, "Note!", CONFIG.font.bigStyle);
 
     state.notes = new Notes(state);
     state.game.time.events.repeat(Phaser.Timer.SECOND * 3, 1, this.addTargetNote, this);
