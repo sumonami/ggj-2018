@@ -12,9 +12,7 @@ var CONFIG = require('./config');
 
 var States = {
     'Startup': require('./states/startup'),
-    'Moodfield': require('./states/moodfield'),
-    'TitleState': require('./states/title'),
-    'EndState': require('./states/end')
+    'Moodfield': require('./states/moodfield')
 };
 
 /**

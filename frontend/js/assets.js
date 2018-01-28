@@ -17,16 +17,6 @@ var assets = {
     // images are standard image files.
     // Format is [key, path]
     images: [
-        ['player1', 'images/player1.png'],
-        ['player2', 'images/player2.png'],
-        ['player3', 'images/player3.png'],
-        ['player4', 'images/player4.png'],
-        ['player5', 'images/player5.png'],
-        ['player6', 'images/player6.png'],
-        ['player7', 'images/player7.png'],
-        ['player8', 'images/player8.png'],
-        ['dog-bullet', 'images/dog-bullet.png'],
-        ['wave', 'images/blue_circle.png'],
         ['roadTop', 'images/road_top.png'],
         ['roadMiddle', 'images/road_middle.png'],
         ['roadBottom', 'images/road_bottom.png'],
@@ -37,7 +27,6 @@ var assets = {
         ['angry', 'images/angry.png']
     ],
     spritesheets: [
-        ['water', 'spritesheets/water.png', 256, 256]
     ],
     // Audio files to load
     sounds: [
@@ -58,9 +47,6 @@ var assets = {
         ],
         ['sfx-washed-last', ['audio/sfx-washed-last.mp3',
                              'audio/sfx-washed-last.opus']
-        ],
-        ['voice-sumonami', ['audio/voice-sumonami.mp3',
-                            'audio/voice-sumonami.opus']
         ]
     ]
 };
