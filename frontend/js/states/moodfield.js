@@ -36,6 +36,9 @@ MoodfieldState.prototype.create = function(game) {
     this.startButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     this.startButton.onDown.add(state.startGame, this);
     this.titleText = this.game.add.text(0, 0, "Press SPACE to start!", CONFIG.font.bigStyle);
+    this.game.winsprites = state.game.add.group();
+    this.game.losesprites = state.game.add.group();
+
 };
 
 
@@ -140,34 +143,6 @@ MoodfieldState.prototype.scoreAngry = function(num) {
     }
 };
 
-MoodfieldState.prototype.addWinNote = function() {
-    var state = this;
-    console.log("creating success to this.winnersdrawn: " + this.winnersdrawn);
-    console.log("creating success to this.winspacing: " + this.winspacing);
-
-    var xpos = (50 + (this.winnersdrawn * (this.winspacing + 80)))
-    console.log("creating success to xpos: " + xpos);
-
-
-    var playernoteinfo = {
-        initLoc: [xpos, state.game.height - 400],
-        initVel: 0,
-        isPlayer: false,
-        sprite: 'sad',
-        image: 'sad',
-        tint: '0x0099ff' // "sad" blue
-    };
-
-
-    var newnote = new Note(state, playernoteinfo);
-    newnote.body.velocity.x = 0;
-    newnote.body.velocity.y = 0;
-
-    //Phaser.Physics.ARCADE.moveToXY(newnote, xpos, wininfo.initLoc[1], 100);
-    this.winnersdrawn++;
-
-};
-
 
 MoodfieldState.prototype.startGame = function() {
     var state = this;
@@ -184,6 +159,14 @@ MoodfieldState.prototype.startGame = function() {
     state.scoreHappy();
     state.scoreAngry();
 
+    //big dirty hack to make sure all the result sprites are gone.
+    state.game.winsprites.callAll('destroy');
+    state.game.losesprites.callAll('destroy');
+    state.game.winsprites.callAll('destroy');
+    state.game.losesprites.callAll('destroy');
+    state.game.winsprites.callAll('destroy');
+    state.game.losesprites.callAll('destroy');
+
     // Create player Note
     var playerNoteInfo = {
         initLoc: [50, state.game.height-150],
@@ -193,7 +176,7 @@ MoodfieldState.prototype.startGame = function() {
         image: 'happy',
         tint: '0xffffff' // white
     };
-    state.noteText = this.game.add.text(playerNoteInfo.initLoc[0] - 20, state.game.height-230, "Note!", CONFIG.font.bigStyle);
+    state.noteText = state.game.add.text(playerNoteInfo.initLoc[0] - 20, state.game.height-230, "Note!", CONFIG.font.bigStyle);
     state.playerNote = new Note(state, playerNoteInfo);
 
     // NPC Notes
@@ -202,7 +185,43 @@ MoodfieldState.prototype.startGame = function() {
     state.game.noteWaitTime = 3;
     state.game.minNoteWaitTime = 0.5;
     state.game.noteWaitTimeReduceFactor = 0.9;
-    state.game.time.events.repeat(Phaser.Timer.SECOND * state.game.noteWaitTime, state.game.notesToAdd, this.addTargetNote, this);
+    state.game.time.events.repeat(Phaser.Timer.SECOND * state.game.noteWaitTime, state.game.notesToAdd, state.addTargetNote, state);
+};
+
+
+MoodfieldState.prototype.addWinNote = function() {
+    var state = this;
+    console.log("creating success to this.winnersdrawn: " + this.winnersdrawn);
+    console.log("creating success to this.winspacing: " + this.winspacing);
+
+    var xpos = (50 + (this.winnersdrawn * (this.winspacing + 40)))
+    console.log("creating success to xpos: " + xpos);
+
+    //var newnote = new Note(state, playernoteinfo);
+    var newnote = state.game.add.sprite( xpos, state.game.height - 500, "happy");
+
+    newnote.tint = '0x66ff33';
+    state.game.winsprites.add(newnote);  //add to group for later cleanup
+    //Phaser.Physics.ARCADE.moveToXY(newnote, xpos, wininfo.initLoc[1], 100);
+    this.winnersdrawn++;
+};
+
+
+MoodfieldState.prototype.addLoseNote = function() {
+    var state = this;
+    console.log("creating success to this.losersdrawn: " + this.losersdrawn);
+    console.log("creating success to this.losespacing: " + this.losespacing);
+
+    var xpos = (50 + (this.losersdrawn * (this.losespacing + 40)))
+    console.log("creating success to xpos: " + xpos);
+
+    //var newnote = new Note(state, playernoteinfo);
+    var newnote = state.game.add.sprite( xpos, state.game.height - 350, "angry");
+
+    newnote.tint = '0xff3300';
+    state.game.losesprites.add(newnote);  //add to group for later cleanup
+    //Phaser.Physics.ARCADE.moveToXY(newnote, xpos, wininfo.initLoc[1], 100);
+    this.losersdrawn++;
 };
 
 
@@ -219,8 +238,8 @@ MoodfieldState.prototype.endGame = function(endCondition) {
     this.winnersdrawn = 0;
     this.losersdrawn = 0;
 
-    state.game.time.events.repeat(Phaser.Timer.SECOND * 0.5, state.happyScore, this.addWinNote, this);
-    //state.game.time.events.repeat(Phaser.Timer.SECOND * 0.5, state.angryScore, this.addLoseNote(), this);
+    state.game.time.events.repeat(Phaser.Timer.SECOND * 0.01, state.happyScore, this.addWinNote, this);
+    state.game.time.events.repeat(Phaser.Timer.SECOND * 0.01, state.angryScore, this.addLoseNote, this);
 
 };
 
