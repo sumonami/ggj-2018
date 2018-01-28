@@ -148,7 +148,6 @@ MoodfieldState.prototype.incrementAngry = function() {
 MoodfieldState.prototype.endGame = function() {
     var state = this;
     state.gameOver = true;
-    state.notes.destroy();
     console.log("Game over called");
 }
 

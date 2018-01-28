@@ -49,6 +49,7 @@ Note.prototype.constructor = Note;
 
 Note.prototype.update = function() {
     var self = this;
+
     self.noteText.position.x = this.x;
 
     if ((!self.fulfilled) && (this.x < self.state.playerNote.x)) {
