@@ -33,6 +33,7 @@ MoodfieldState.prototype.create = function(game) {
     var playernoteinfo = {
         initLoc: [50, state.game.height-150],
         initVel: 0,
+        isPlayer: true,
         sprite: 'happy',
         image: 'happy',
         tint: '0xffffff' // white
@@ -59,6 +60,7 @@ MoodfieldState.prototype.addTargetNote = function() {
     var playernoteinfo = {
         initLoc: [state.game.width, state.game.height-200],
         initVel: -200,
+        isPlayer: false,
         sprite: 'sad',
         image: 'sad',
         tint: '0x0099ff' // "sad" blue
