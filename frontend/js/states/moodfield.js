@@ -19,6 +19,8 @@ MoodfieldState.prototype.create = function(game) {
     console.log("MOODFIELD create");
     var state = this;
 
+    // Init
+    state.gameOver = false;
     state.happyScore = 0;
     state.angryScore = 0;
 
@@ -41,7 +43,6 @@ MoodfieldState.prototype.create = function(game) {
 
     state.happyText = this.game.add.text(0, 0, state.happyScore, CONFIG.font.bigStyle);
     state.angryText = this.game.add.text(state.game.width - 40, 0, state.angryScore, CONFIG.font.bigStyle);
-    // state.noteText = this.game.add.text(70, state.game.height - 160, "Note!", CONFIG.font.bigStyle);
     state.noteText = this.game.add.text(playernoteinfo.initLoc[0] - 20, state.game.height-230, "Note!", CONFIG.font.bigStyle);
 
     state.notes = new Notes(state);
@@ -50,7 +51,6 @@ MoodfieldState.prototype.create = function(game) {
     state.game.minNoteWaitTime = 0.5;
     state.game.noteWaitTimeReduceFactor = 0.5;
     state.game.time.events.repeat(Phaser.Timer.SECOND * state.game.noteWaitTime, state.game.notesToAdd, this.addTargetNote, this);
-    // state.game.time.events.repeat(Phaser.Timer.SECOND * 3, 10000, this.addTargetNote, this);
     state.playerNote = new Note(state, playernoteinfo);
 
 };
@@ -58,6 +58,11 @@ MoodfieldState.prototype.create = function(game) {
 
 MoodfieldState.prototype.addTargetNote = function() {
     var state = this;
+
+    if (state.gameOver) {
+        return;
+    }
+
     console.log("creating target...");
     var playernoteinfo = {
         initLoc: [state.game.width+1, state.game.height-150],
@@ -70,8 +75,6 @@ MoodfieldState.prototype.addTargetNote = function() {
     var newnote = new Note(state, playernoteinfo);
 
     state.notes.add(newnote);
-
-    //state.noteText = this.game.add.text(playernoteinfo.initLoc[0] - 20, playernoteinfo.initLoc[1]-80, "Note!", CONFIG.font.bigStyle);
 
     state.game.notesToAdd--;
     if (state.game.notesToAdd < 1) {
@@ -88,6 +91,10 @@ MoodfieldState.prototype.addTargetNote = function() {
 
 MoodfieldState.prototype.update = function() {
     var state = this;
+
+    if (state.gameOver) {
+        return;
+    }
 
     // Deal with player noise making
     var curNote = NoteEngine.getNote(state.game.myPitch);
@@ -123,7 +130,7 @@ MoodfieldState.prototype.incrementHappy = function() {
     self.happyScore++;
     self.happyText.setText(self.happyScore);
     if (self.happyScore > CONFIG.settings.happyMax) {
-        self.state.start('End');
+        self.endGame();
     }
 };
 
@@ -133,9 +140,16 @@ MoodfieldState.prototype.incrementAngry = function() {
     self.angryScore++;
     self.angryText.setText(self.angryScore);
     if (self.angryScore > CONFIG.settings.angryMax) {
-        self.state.start('End');
+        self.endGame();
     }
 };
 
+
+MoodfieldState.prototype.endGame = function() {
+    var state = this;
+    state.gameOver = true;
+    state.notes.destroy();
+    console.log("Game over called");
+}
 
 module.exports = MoodfieldState;
