@@ -40,6 +40,9 @@ var assets = {
         ['bgm-title', ['audio/bgm-title.mp3',
                        'audio/bgm-title.opus']
         ],
+        ['bgm', ['audio/bgm.mp3',
+                 'audio/bgm.opus']
+        ],
         ['bgm-apeshit', ['audio/bgm-apeshit.mp3',
                          'audio/bgm-apeshit.opus']
         ],

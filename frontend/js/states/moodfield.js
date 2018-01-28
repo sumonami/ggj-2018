@@ -22,6 +22,7 @@ MoodfieldState.prototype.create = function(game) {
     state.apeshitMode = false;
     this.createBackground();
     state.musTheme = this.add.audio('bgm-title');
+    state.bgmTheme = this.add.audio('bgm');
     state.apeTheme = this.add.audio('bgm-apeshit');
     state.imgTitle = this.add.sprite(0, 0, 'titleText');
     state.imgTitle.anchor.set(0.5);
@@ -167,6 +168,7 @@ MoodfieldState.prototype.startGame = function() {
     state.titleText.destroy();
     state.imgTitle.visible = false;
     state.musTheme.stop();
+    state.bgmTheme.play();
 
     // Reset state where applicable
     state.gameOver = false;
@@ -210,6 +212,7 @@ MoodfieldState.prototype.goApeshit = function() {
 
     if (state.apeshitMode) {
         state.apeTheme.stop();
+        state.bgmTheme.play();
         state.time.events.remove(state.apeEvent);
         state.game.stage.backgroundColor = "#f7d78a";
         state.maxHappyScore = CONFIG.settings.happyMax;
@@ -238,6 +241,7 @@ MoodfieldState.prototype.goApeshit = function() {
         });
 
         // Play running in the 90s
+        state.bgmTheme.stop();
         state.apeTheme.play();
     }
 };
