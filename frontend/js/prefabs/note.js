@@ -36,7 +36,6 @@ var Note = function(state, playerinfo) {
     this.body.mass = 100;
     this.body.bounce.set(1);
     this.body.stopVelocityOnCollide = true;
-
 };
 
 Note.prototype = Object.create(Phaser.Sprite.prototype);
@@ -46,9 +45,8 @@ Note.prototype.constructor = Note;
 Note.prototype.update = function() {
 };
 
-
 Note.prototype.render = function (){
-}
+};
 
 Note.prototype.makeAngry = function () {
     this.tint = '0xff3300';
@@ -68,7 +66,6 @@ Note.prototype.makeHappy = function () {
 Note.prototype.scaleSprite = function (sprite, increment){
         sprite.scale.setTo(sprite.scale.x + increment);
         sprite.alpha -= 0.01;
-    };
-
+};
 
 module.exports = Note;

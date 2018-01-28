@@ -1,6 +1,7 @@
 'use strict';
 
 var _common = require('./_common');
+var CONFIG = require('../config');
 var Note = require('../prefabs/note');
 var Notes = require('../prefabs/notes');
 var MoodfieldState = function() {};
@@ -8,13 +9,18 @@ var NoteEngine = require('../note');
 
 var timer, timerEvent;
 
+
 MoodfieldState.prototype.preload = function() {
     _common.setGameScale(this.game);
 };
 
+
 MoodfieldState.prototype.create = function(game) {
     console.log("MOODFIELD create");
     var state = this;
+
+    state.happyScore = 0;
+    state.angryScore = 0;
 
     //  This will run in Canvas mode, so let's gain a little speed and display
     state.game.renderer.clearBeforeRender = false;
@@ -32,13 +38,17 @@ MoodfieldState.prototype.create = function(game) {
         tint: '0xffffff' // white
     };
 
+    state.happyText = this.game.add.text(0, 0, state.happyScore, CONFIG.font.bigStyle);
+    state.angryText = this.game.add.text(state.game.width - 40, 0, state.angryScore, CONFIG.font.bigStyle);
+    state.noteText = this.game.add.text(50, state.game.height - 160, "Note!", CONFIG.font.bigStyle);
+
     state.notes = new Notes(state);
     state.game.time.events.repeat(Phaser.Timer.SECOND * 3, 1, this.addTargetNote, this);
-    console.log("WIDTH", state.game.width)
-    console.log("HEIGHT", state.game.height)
+    console.log("WIDTH", state.game.width);
+    console.log("HEIGHT", state.game.height);
     state.playerNote = new Note(state, playernoteinfo);
-    console.log("XPOS", state.playerNote.x)
-    console.log("YPOS", state.playerNote.y)
+    console.log("XPOS", state.playerNote.x);
+    console.log("YPOS", state.playerNote.y);
 
 };
 
@@ -54,19 +64,26 @@ MoodfieldState.prototype.addTargetNote = function() {
         tint: '0x0099ff' // "sad" blue
     };
     state.notes.add(new Note(state, playernoteinfo));
-
-    // Randomly log note
-    state.time.events.repeat(Phaser.Timer.SECOND * 2, 10, this.logNote, this);
 };
 
 
 MoodfieldState.prototype.update = function() {
     var state = this;
+
+    // Deal with player noise making
+    var curNote = NoteEngine.getNote(state.game.myPitch);
+    if (curNote) {
+        state.noteText.setText(curNote);
+    } else {
+        state.noteText.setText("");
+    }
+
     state.roadTop.tilePosition.x-= 1;
     state.roadBottom.tilePosition.x -= 2;
     state.playerNote.makeHappy();
-    state.notes.update()
+    state.notes.update();
 };
+
 
 MoodfieldState.prototype.createBackground = function() {
     var state = this;
@@ -82,9 +99,25 @@ MoodfieldState.prototype.createBackground = function() {
                                                  'roadBottom');
 };
 
-MoodfieldState.prototype.logNote = function() {
-    var state = this;
-    console.log(NoteEngine.getNote(state.game.myPitch));
+
+MoodfieldState.prototype.incrementHappy = function() {
+    var self = this;
+    self.happyScore++;
+    self.happyText.setText(self.happyScore);
+    if (self.happyScore > CONFIG.settings.happyMax) {
+        self.state.start('End');
+    }
 };
+
+
+MoodfieldState.prototype.incrementAngry = function() {
+    var self = this;
+    self.angryScore++;
+    self.angryText.setText(self.angryScore);
+    if (self.angryScore > CONFIG.settings.angryMax) {
+        self.state.start('End');
+    }
+};
+
 
 module.exports = MoodfieldState;

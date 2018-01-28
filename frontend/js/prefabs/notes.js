@@ -33,6 +33,7 @@ Notes.prototype.update = function() {
                 this.children[i].body.velocity.y = -100;
                 // TODO: Score increment
                 console.log("success");
+                self.state.incrementHappy();
             }
             else {
                 this.children[i].makeAngry();
@@ -41,6 +42,7 @@ Notes.prototype.update = function() {
 
                 // TODO: Sad increment
                 console.log("fail");
+                self.state.incrementAngry();
             }
 
             self.fulfilled = true;
