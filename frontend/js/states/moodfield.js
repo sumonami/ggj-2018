@@ -189,7 +189,7 @@ MoodfieldState.prototype.startGame = function() {
 
     // NPC Notes
     state.notes = new Notes(state);
-    state.game.notesToAdd = 5;
+    state.game.notesToAdd = 1;
     state.game.noteWaitTime = 3;
     state.game.minNoteWaitTime = 0.5;
     state.game.noteWaitTimeReduceFactor = 0.9;
@@ -214,10 +214,19 @@ MoodfieldState.prototype.goApeshit = function() {
         state.game.stage.backgroundColor = "#f7d78a";
         state.maxHappyScore = CONFIG.settings.happyMax;
         state.maxAngryScore = CONFIG.settings.angryMax;
+
+        state.game.minNoteWaitTime = 0.5;
+        state.game.noteWaitTime = 2;
+        state.game.noteWaitTimeReduceFactor = 0.9;
+
         state.apeshitMode = false;
     } else {
 
         state.apeshitMode = true;
+
+        state.game.minNoteWaitTime = 0.1;
+        state.game.noteWaitTime = 0.7;
+        state.game.noteWaitTimeReduceFactor = 0.8;
 
         // Unlimited score
         state.maxHappyScore = 9999;
