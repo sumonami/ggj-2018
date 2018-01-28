@@ -19,8 +19,10 @@ MoodfieldState.prototype.create = function(game) {
     var state = this;
 
     // Init
+    state.apeshitMode = false;
     this.createBackground();
     state.musTheme = this.add.audio('bgm-title');
+    state.apeTheme = this.add.audio('bgm-apeshit');
     state.imgTitle = this.add.sprite(0, 0, 'titleText');
     state.imgTitle.anchor.set(0.5);
     state.imgTitle.x = this.game.width / 2;
@@ -39,6 +41,8 @@ MoodfieldState.prototype.create = function(game) {
     // Start game for now
     this.startButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     this.startButton.onDown.add(state.startGame, this);
+    this.apeButton = this.game.input.keyboard.addKey(Phaser.Keyboard.L);
+    this.apeButton.onDown.add(state.goApeshit, this);
     this.titleText = this.game.add.text(0, 0, "Press SPACE to start!", CONFIG.font.bigStyle);
 
     // Play Theme
@@ -50,7 +54,7 @@ MoodfieldState.prototype.update = function() {
     var state = this;
 
     // state.game.time.events.repeat(Phaser.Timer.SECOND * 0.5, function() { state.clouds.tilePosition.x += 10; });
-    state.clouds.tilePosition.x += 1
+    state.clouds.tilePosition.x += 1;
 
     if (state.gameOver) {
         return;
@@ -197,5 +201,29 @@ MoodfieldState.prototype.endGame = function(endCondition) {
     state.endCondition = endCondition;
     console.log("Game over called");
 };
+
+
+MoodfieldState.prototype.goApeshit = function() {
+    var state = this;
+
+    if (state.apeshitMode) {
+        state.apeTheme.stop();
+        state.time.events.remove(state.apeEvent);
+        state.game.stage.backgroundColor = "#f7d78a";
+        state.apeshitMode = false;
+    } else {
+
+        state.apeshitMode = true;
+
+        // Fuck sky up
+        state.apeEvent = state.time.events.repeat(Phaser.Timer.SECOND * 0.1, 1000, function() {
+            state.game.stage.backgroundColor = Phaser.Color.getRandomColor(50, 255, 255);
+        });
+
+        // Play running in the 90s
+        state.apeTheme.play();
+    }
+};
+
 
 module.exports = MoodfieldState;
