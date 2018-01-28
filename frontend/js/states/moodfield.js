@@ -135,7 +135,7 @@ MoodfieldState.prototype.scoreHappy = function(num) {
         self.happyScore += num;
     }
     self.happyText.setText("Happy Tones: " + self.happyScore);
-    if (self.happyScore > CONFIG.settings.happyMax) {
+    if (self.happyScore > self.maxHappyScore) {
         self.endGame("win");
     }
 };
@@ -150,7 +150,7 @@ MoodfieldState.prototype.scoreAngry = function(num) {
         self.angryScore += num;
     }
     self.angryText.setText("Angry Tones: " + self.angryScore);
-    if (self.angryScore > CONFIG.settings.angryMax) {
+    if (self.angryScore > self.maxAngryScore) {
         self.endGame("lose");
     }
 };
@@ -171,7 +171,9 @@ MoodfieldState.prototype.startGame = function() {
     // Reset state where applicable
     state.gameOver = false;
     state.scoreHappy();
+    state.maxHappyScore = CONFIG.settings.happyMax;
     state.scoreAngry();
+    state.maxAngryScore = CONFIG.settings.angryMax;
 
     // Create player Note
     var playerNoteInfo = {
@@ -210,10 +212,16 @@ MoodfieldState.prototype.goApeshit = function() {
         state.apeTheme.stop();
         state.time.events.remove(state.apeEvent);
         state.game.stage.backgroundColor = "#f7d78a";
+        state.maxHappyScore = CONFIG.settings.happyMax;
+        state.maxAngryScore = CONFIG.settings.angryMax;
         state.apeshitMode = false;
     } else {
 
         state.apeshitMode = true;
+
+        // Unlimited score
+        state.maxHappyScore = 9999;
+        state.maxAngryScore = 9999;
 
         // Fuck sky up
         state.apeEvent = state.time.events.repeat(Phaser.Timer.SECOND * 0.1, 1000, function() {
