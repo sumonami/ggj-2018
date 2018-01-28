@@ -4,7 +4,7 @@ var _common = require('./_common');
 var Note = require('../prefabs/note');
 var Notes = require('../prefabs/notes');
 var MoodfieldState = function() {};
-var getNote = require('../note');
+var NoteEngine = require('../note');
 
 var timer, timerEvent;
 
@@ -84,7 +84,7 @@ MoodfieldState.prototype.createBackground = function() {
 
 MoodfieldState.prototype.logNote = function() {
     var state = this;
-    console.log(getNote(state.game.myPitch));
+    console.log(NoteEngine.getNote(state.game.myPitch));
 };
 
 module.exports = MoodfieldState;

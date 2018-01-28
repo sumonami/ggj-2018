@@ -8,4 +8,7 @@ function getNote(frequency) {
     return noteStrings[note%12];
 }
 
-module.exports = getNote;
+module.exports = {
+    getNote: getNote,
+    noteStrings: noteStrings
+};
