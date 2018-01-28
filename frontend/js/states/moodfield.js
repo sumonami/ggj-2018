@@ -4,6 +4,7 @@ var _common = require('./_common');
 var Note = require('../prefabs/note');
 var Notes = require('../prefabs/notes');
 var MoodfieldState = function() {};
+var getNote = require('../note');
 
 var timer, timerEvent;
 
@@ -54,6 +55,8 @@ MoodfieldState.prototype.addTargetNote = function() {
     };
     state.notes.add(new Note(state, playernoteinfo));
 
+    // Randomly log note
+    state.time.events.repeat(Phaser.Timer.SECOND * 2, 10, this.logNote, this);
 };
 
 
@@ -77,6 +80,11 @@ MoodfieldState.prototype.createBackground = function() {
     state.roadBottom = state.game.add.tileSprite(0, state.game.height - 81,
                                                  state.game.width, 81,
                                                  'roadBottom');
+};
+
+MoodfieldState.prototype.logNote = function() {
+    var state = this;
+    console.log(getNote(state.game.myPitch));
 };
 
 module.exports = MoodfieldState;
