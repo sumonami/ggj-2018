@@ -7,7 +7,7 @@ var Note = function(state, playerinfo) {
     var y = playerinfo.initLoc[1];
     var image = playerinfo.image;
     this.state = state;
-
+    this.note = "A";
     // instantiate object
     Phaser.Sprite.call(this, state.game, x, y, image);
     // constants
