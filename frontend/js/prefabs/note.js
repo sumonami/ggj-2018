@@ -30,10 +30,6 @@ var Note = function(state, playerinfo) {
     this.enableBody = true;
 
     this.body.velocity.x = playerinfo.initVel;
-    // this.body.maxVelocity.set(800);
-    // this.repel_max_range=300;
-    // this.repel_initial_vel=350;
-
     // add to canvas and log
     state.game.add.existing(this);
 
@@ -75,7 +71,6 @@ Note.prototype.update = function() {
         }
         self.fulfilled = true;
     }
-    // console.log("update being left, self.x", self.x, "player.x", this.state.playerNote.x);
 };
 
 Note.prototype.render = function (){
