@@ -49,6 +49,9 @@ MoodfieldState.prototype.create = function(game) {
 MoodfieldState.prototype.update = function() {
     var state = this;
 
+    // state.game.time.events.repeat(Phaser.Timer.SECOND * 0.5, function() { state.clouds.tilePosition.x += 10; });
+    state.clouds.tilePosition.x += 1
+
     if (state.gameOver) {
         return;
     }
@@ -69,7 +72,8 @@ MoodfieldState.prototype.update = function() {
 
 MoodfieldState.prototype.createBackground = function() {
     var state = this;
-    state.game.stage.backgroundColor = "#4B7B00";
+    state.game.stage.backgroundColor = "#f7d78a";
+    state.clouds = this.add.tileSprite(0, 0, state.game.width, 400, 'clouds');
     state.roadTop = state.game.add.tileSprite(0, state.game.height - 391,
                                               state.game.width, 191,
                                               'roadTop');

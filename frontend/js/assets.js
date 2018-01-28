@@ -17,6 +17,7 @@ var assets = {
     // images are standard image files.
     // Format is [key, path]
     images: [
+        ['clouds', 'images/clouds.png'],
         ['roadTop', 'images/road_top.png'],
         ['roadMiddle', 'images/road_middle.png'],
         ['roadBottom', 'images/road_bottom.png'],
