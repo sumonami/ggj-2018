@@ -1,5 +1,5 @@
 frontend:
-    image: node:7
+    image: node:9
     volumes:
         - ./frontend:/src
         - ./static:/static
