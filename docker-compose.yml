@@ -3,9 +3,9 @@ frontend:
     volumes:
         - ./frontend:/src
         - ./static:/static
-        - ./node_modules:/src/node_modules
+        - /src/node_modules
     working_dir: /src
-    command: make build
+    command: make watch
 server:
     build: server
     volumes:
