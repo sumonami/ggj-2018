@@ -18,42 +18,26 @@ var assets = {
     // Format is [key, path]
     images: [
         ['clouds', 'images/clouds.png'],
-        ['roadTop', 'images/road_top.png'],
-        ['roadMiddle', 'images/road_middle.png'],
         ['roadBottom', 'images/road_bottom.png'],
-        ['titleText', 'images/titleText.png'],
-        ['titleBackground', 'images/titleBackground.png'],
-        ['happy', 'images/happy.png'],
-        ['sad', 'images/sad.png'],
-        ['angry', 'images/angry.png']
+        ['roadMiddle', 'images/road_middle.png'],
+        ['roadTop', 'images/road_top.png'],
+        ['titleText', 'images/title_text.png'],
+        ['toneAngry', 'images/tone_angry.png'],
+        ['toneHappy', 'images/tone_happy.png'],
+        ['toneSad', 'images/tone_sad.png']
     ],
     spritesheets: [
     ],
     // Audio files to load
     sounds: [
-        ['bgm-applause', ['audio/bgm-applause.mp3',
-                          'audio/bgm-applause.opus']
+        ['bgmTitle', ['audio/bgm-title.mp3',
+                      'audio/bgm-title.opus']
         ],
-        ['bgm-playfield', ['audio/bgm-playfield.mp3',
-                           'audio/bgm-playfield.opus']
+        ['bgmMoodfield', ['audio/bgm-moodfield.mp3',
+                          'audio/bgm-moodfield.opus']
         ],
-        ['bgm-title', ['audio/bgm-title.mp3',
-                       'audio/bgm-title.opus']
-        ],
-        ['bgm', ['audio/bgm.mp3',
-                 'audio/bgm.opus']
-        ],
-        ['bgm-apeshit', ['audio/bgm-apeshit.mp3',
-                         'audio/bgm-apeshit.opus']
-        ],
-        ['sfx-select', ['audio/sfx-select.mp3',
-                        'audio/sfx-select.opus']
-        ],
-        ['sfx-startgame', ['audio/sfx-startgame.mp3',
-                           'audio/sfx-startgame.opus']
-        ],
-        ['sfx-washed-last', ['audio/sfx-washed-last.mp3',
-                             'audio/sfx-washed-last.opus']
+        ['bgmApeshit', ['audio/bgm-apeshit.mp3',
+                        'audio/bgm-apeshit.opus']
         ]
     ]
 };

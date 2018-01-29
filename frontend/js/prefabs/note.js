@@ -87,21 +87,21 @@ Note.prototype.render = function (){
 
 Note.prototype.makeAngry = function () {
     this.tint = '0xff3300';
-    this.loadTexture("angry");
+    this.loadTexture('toneAngry');
     this.body.velocity.x = 100;
     this.body.velocity.y = -100;
 };
 
 Note.prototype.makeSad = function () {
     this.tint = '0x0099ff';
-    this.loadTexture("sad");
+    this.loadTexture('toneSad');
     this.body.velocity.x = 0;
     this.body.velocity.y = 100;
 };
 
 Note.prototype.makeHappy = function () {
     this.tint = '0x66ff33';
-    this.loadTexture("happy");
+    this.loadTexture('toneHappy');
     this.body.velocity.x = 0;
     this.body.velocity.y = -100;
 };

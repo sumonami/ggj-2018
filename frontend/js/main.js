@@ -27,6 +27,7 @@ function Main() {
         Phaser.AUTO
     );
 
+    // MicPitch
     game.myPitch = -1;
     game.updateMyPitch = function(pitch){
         game.myPitch = pitch;

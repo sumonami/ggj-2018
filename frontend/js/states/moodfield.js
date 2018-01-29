@@ -4,10 +4,10 @@ var _common = require('./_common');
 var CONFIG = require('../config');
 var Note = require('../prefabs/note');
 var Notes = require('../prefabs/notes');
-var MoodfieldState = function() {};
 var NoteEngine = require('../note');
 
-var timer, timerEvent;
+
+var MoodfieldState = function() {};
 
 
 MoodfieldState.prototype.preload = function() {
@@ -21,9 +21,9 @@ MoodfieldState.prototype.create = function(game) {
     // Init
     state.apeshitMode = false;
     this.createBackground();
-    state.musTheme = this.add.audio('bgm-title');
-    state.bgmTheme = this.add.audio('bgm', 1, true);
-    state.apeTheme = this.add.audio('bgm-apeshit');
+    state.musTheme = this.add.audio('bgmTitle');
+    state.bgmTheme = this.add.audio('bgmMoodfield', 1, true);
+    state.apeTheme = this.add.audio('bgmApeshit');
     state.imgTitle = this.add.sprite(0, 0, 'titleText');
     state.imgTitle.anchor.set(0.5);
     state.imgTitle.x = this.game.width / 2;
@@ -103,8 +103,8 @@ MoodfieldState.prototype.addTargetNote = function() {
         initLoc: [state.game.width+1, state.game.height-150],
         initVel: -200,
         isPlayer: false,
-        sprite: 'sad',
-        image: 'sad',
+        sprite: 'toneSad',
+        image: 'toneSad',
         tint: '0x0099ff' // "sad" blue
     };
     var newnote = new Note(state, npcNoteInfo);
@@ -182,8 +182,8 @@ MoodfieldState.prototype.startGame = function() {
         initLoc: [50, state.game.height-150],
         initVel: 0,
         isPlayer: true,
-        sprite: 'happy',
-        image: 'happy',
+        sprite: 'toneHappy',
+        image: 'toneHappy',
         tint: '0xffffff' // white
     };
     state.noteText = this.game.add.text(playerNoteInfo.initLoc[0] - 20, state.game.height-230, "Note!", CONFIG.font.bigStyle);
