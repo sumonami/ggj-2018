@@ -1,0 +1,5 @@
+# Added manually for this project
+
+*.bundle.js
+*.bundle.js.map
+assets/audio/*.wav
