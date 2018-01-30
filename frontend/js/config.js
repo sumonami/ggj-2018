@@ -15,7 +15,7 @@ var CONFIG = {
         height: 600
     },
 
-    assetsPath: "/assets/",
+    assetsPath: "assets/",
 
     // Font style definitions
     font: {
