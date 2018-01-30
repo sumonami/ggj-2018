@@ -1,8 +1,0 @@
-{
-    "globals": {
-        "PIXI": false,
-        "Phaser": false,
-        "Tone": false
-    },
-    "node"          : true
-}
