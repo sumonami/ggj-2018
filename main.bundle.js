@@ -37444,7 +37444,7 @@ function(t,e){/**
 var i={stateAfterStartup:"Moodfield",
 // Pixel size of the Phaser canvas.
 // (Canvas itself is scaled to viewport)
-gameSize:{width:800,height:600},assetsPath:"/assets/",
+gameSize:{width:800,height:600},assetsPath:"assets/",
 // Font style definitions
 font:{
 // Generic/default text
